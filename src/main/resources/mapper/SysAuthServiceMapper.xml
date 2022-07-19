@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ffm.saas.smarterp.system.persistence.dao.SysAuthServiceDao">
+  <resultMap id="BaseResultMap" type="org.ffm.saas.smarterp.system.persistence.model.SysAuthServicePo">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="SERVICE_ID" jdbcType="VARCHAR" property="serviceId" />
+    <result column="METHOD_CODE" jdbcType="VARCHAR" property="methodCode" />
+    <result column="SERVICE_CODE" jdbcType="VARCHAR" property="serviceCode" />
+    <result column="ROLE_ID" jdbcType="VARCHAR" property="roleId" />
+    <result column="ROLE_CODE" jdbcType="VARCHAR" property="roleCode" />
+    <result column="SAAS_CODE" jdbcType="VARCHAR" property="saasCode" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_USER" jdbcType="VARCHAR" property="createUser" />
+    <result column="MODIFY_TIME" jdbcType="DATE" property="modifyTime" />
+    <result column="MODIFY_USER" jdbcType="VARCHAR" property="modifyUser" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, SERVICE_ID, METHOD_CODE, SERVICE_CODE, ROLE_ID, ROLE_CODE, SAAS_CODE, REMARK, 
+    CREATE_TIME, CREATE_USER, MODIFY_TIME, MODIFY_USER
+  </sql>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select ID, SERVICE_ID, METHOD_CODE, SERVICE_CODE, ROLE_ID, ROLE_CODE, SAAS_CODE, 
+    REMARK, CREATE_TIME, CREATE_USER, MODIFY_TIME, MODIFY_USER
+    from t_sys_authservice
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_sys_authservice
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_sys_authservice
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.ffm.saas.smarterp.system.persistence.model.SysAuthServicePo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_sys_authservice (SERVICE_ID, METHOD_CODE, SERVICE_CODE, 
+      ROLE_ID, ROLE_CODE, SAAS_CODE, 
+      REMARK, CREATE_TIME, CREATE_USER, 
+      MODIFY_TIME, MODIFY_USER)
+    values (#{serviceId,jdbcType=VARCHAR}, #{methodCode,jdbcType=VARCHAR}, #{serviceCode,jdbcType=VARCHAR}, 
+      #{roleId,jdbcType=VARCHAR}, #{roleCode,jdbcType=VARCHAR}, #{saasCode,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=DATE}, #{modifyUser,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.ffm.saas.smarterp.system.persistence.model.SysAuthServicePo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_sys_authservice
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="serviceId != null">
+        SERVICE_ID,
+      </if>
+      <if test="methodCode != null">
+        METHOD_CODE,
+      </if>
+      <if test="serviceCode != null">
+        SERVICE_CODE,
+      </if>
+      <if test="roleId != null">
+        ROLE_ID,
+      </if>
+      <if test="roleCode != null">
+        ROLE_CODE,
+      </if>
+      <if test="saasCode != null">
+        SAAS_CODE,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createUser != null">
+        CREATE_USER,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUser != null">
+        MODIFY_USER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="serviceId != null">
+        #{serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="methodCode != null">
+        #{methodCode,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceCode != null">
+        #{serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleCode != null">
+        #{roleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="saasCode != null">
+        #{saasCode,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=DATE},
+      </if>
+      <if test="modifyUser != null">
+        #{modifyUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.ffm.saas.smarterp.system.persistence.model.SysAuthServicePo">
+    update t_sys_authservice
+    <set>
+      <if test="serviceId != null">
+        SERVICE_ID = #{serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="methodCode != null">
+        METHOD_CODE = #{methodCode,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceCode != null">
+        SERVICE_CODE = #{serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        ROLE_ID = #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleCode != null">
+        ROLE_CODE = #{roleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="saasCode != null">
+        SAAS_CODE = #{saasCode,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=DATE},
+      </if>
+      <if test="modifyUser != null">
+        MODIFY_USER = #{modifyUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.ffm.saas.smarterp.system.persistence.model.SysAuthServicePo">
+    update t_sys_authservice
+    set SERVICE_ID = #{serviceId,jdbcType=VARCHAR},
+      METHOD_CODE = #{methodCode,jdbcType=VARCHAR},
+      SERVICE_CODE = #{serviceCode,jdbcType=VARCHAR},
+      ROLE_ID = #{roleId,jdbcType=VARCHAR},
+      ROLE_CODE = #{roleCode,jdbcType=VARCHAR},
+      SAAS_CODE = #{saasCode,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=DATE},
+      MODIFY_USER = #{modifyUser,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

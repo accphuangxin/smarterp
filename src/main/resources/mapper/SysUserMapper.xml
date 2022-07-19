@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ffm.saas.smarterp.system.persistence.dao.SysUserDao">
+  <resultMap id="BaseResultMap" type="org.ffm.saas.smarterp.system.persistence.model.SysUserPo">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="LOGIN_ID" jdbcType="VARCHAR" property="loginId" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+    <result column="ALIVE_FLAG" jdbcType="VARCHAR" property="aliveFlag" />
+    <result column="MOBILE_PHONE" jdbcType="VARCHAR" property="mobilePhone" />
+    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
+    <result column="IN_JOIN_TIME" jdbcType="VARCHAR" property="inJoinTime" />
+    <result column="login_count" jdbcType="INTEGER" property="loginCount" />
+    <result column="E_MAIL" jdbcType="VARCHAR" property="eMail" />
+    <result column="SAAS_CODE" jdbcType="VARCHAR" property="saasCode" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, LOGIN_ID, NAME, PASSWORD, ALIVE_FLAG, MOBILE_PHONE, ORG_CODE, IN_JOIN_TIME, login_count, 
+    E_MAIL, SAAS_CODE, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME
+  </sql>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select ID, LOGIN_ID, NAME, PASSWORD, ALIVE_FLAG, MOBILE_PHONE, ORG_CODE, IN_JOIN_TIME, 
+    login_count, E_MAIL, SAAS_CODE, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME
+    from t_sys_user
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_sys_user
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_sys_user
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.ffm.saas.smarterp.system.persistence.model.SysUserPo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_sys_user (LOGIN_ID, NAME, PASSWORD, 
+      ALIVE_FLAG, MOBILE_PHONE, ORG_CODE, 
+      IN_JOIN_TIME, login_count, E_MAIL, 
+      SAAS_CODE, CREATE_BY, CREATE_TIME, 
+      UPDATE_BY, UPDATE_TIME)
+    values (#{loginId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{aliveFlag,jdbcType=VARCHAR}, #{mobilePhone,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, 
+      #{inJoinTime,jdbcType=VARCHAR}, #{loginCount,jdbcType=INTEGER}, #{eMail,jdbcType=VARCHAR}, 
+      #{saasCode,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="org.ffm.saas.smarterp.system.persistence.model.SysUserPo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_sys_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="loginId != null">
+        LOGIN_ID,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="password != null">
+        PASSWORD,
+      </if>
+      <if test="aliveFlag != null">
+        ALIVE_FLAG,
+      </if>
+      <if test="mobilePhone != null">
+        MOBILE_PHONE,
+      </if>
+      <if test="orgCode != null">
+        ORG_CODE,
+      </if>
+      <if test="inJoinTime != null">
+        IN_JOIN_TIME,
+      </if>
+      <if test="loginCount != null">
+        login_count,
+      </if>
+      <if test="eMail != null">
+        E_MAIL,
+      </if>
+      <if test="saasCode != null">
+        SAAS_CODE,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="loginId != null">
+        #{loginId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="aliveFlag != null">
+        #{aliveFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null">
+        #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="inJoinTime != null">
+        #{inJoinTime,jdbcType=VARCHAR},
+      </if>
+      <if test="loginCount != null">
+        #{loginCount,jdbcType=INTEGER},
+      </if>
+      <if test="eMail != null">
+        #{eMail,jdbcType=VARCHAR},
+      </if>
+      <if test="saasCode != null">
+        #{saasCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.ffm.saas.smarterp.system.persistence.model.SysUserPo">
+    update t_sys_user
+    <set>
+      <if test="loginId != null">
+        LOGIN_ID = #{loginId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="aliveFlag != null">
+        ALIVE_FLAG = #{aliveFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null">
+        MOBILE_PHONE = #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="inJoinTime != null">
+        IN_JOIN_TIME = #{inJoinTime,jdbcType=VARCHAR},
+      </if>
+      <if test="loginCount != null">
+        login_count = #{loginCount,jdbcType=INTEGER},
+      </if>
+      <if test="eMail != null">
+        E_MAIL = #{eMail,jdbcType=VARCHAR},
+      </if>
+      <if test="saasCode != null">
+        SAAS_CODE = #{saasCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.ffm.saas.smarterp.system.persistence.model.SysUserPo">
+    update t_sys_user
+    set LOGIN_ID = #{loginId,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      ALIVE_FLAG = #{aliveFlag,jdbcType=VARCHAR},
+      MOBILE_PHONE = #{mobilePhone,jdbcType=VARCHAR},
+      ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      IN_JOIN_TIME = #{inJoinTime,jdbcType=VARCHAR},
+      login_count = #{loginCount,jdbcType=INTEGER},
+      E_MAIL = #{eMail,jdbcType=VARCHAR},
+      SAAS_CODE = #{saasCode,jdbcType=VARCHAR},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

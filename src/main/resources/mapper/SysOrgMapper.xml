@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ffm.saas.smarterp.system.persistence.dao.SysOrgDao">
+  <resultMap id="BaseResultMap" type="org.ffm.saas.smarterp.system.persistence.model.SysOrgPo">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
+    <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
+    <result column="PARENT_CODE" jdbcType="VARCHAR" property="parentCode" />
+    <result column="LEVELS" jdbcType="INTEGER" property="levels" />
+    <result column="ALIVE_FLAG" jdbcType="INTEGER" property="aliveFlag" />
+    <result column="SAAS_CODE" jdbcType="VARCHAR" property="saasCode" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="STATE" jdbcType="VARCHAR" property="state" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, ORG_CODE, ORG_NAME, PARENT_CODE, LEVELS, ALIVE_FLAG, SAAS_CODE, CREATE_BY, CREATE_TIME, 
+    UPDATE_BY, UPDATE_TIME, STATE
+  </sql>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select ID, ORG_CODE, ORG_NAME, PARENT_CODE, LEVELS, ALIVE_FLAG, SAAS_CODE, CREATE_BY, 
+    CREATE_TIME, UPDATE_BY, UPDATE_TIME, STATE
+    from t_sys_org
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_sys_org
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_sys_org
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.ffm.saas.smarterp.system.persistence.model.SysOrgPo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_sys_org (ORG_CODE, ORG_NAME, PARENT_CODE, 
+      LEVELS, ALIVE_FLAG, SAAS_CODE, 
+      CREATE_BY, CREATE_TIME, UPDATE_BY, 
+      UPDATE_TIME, STATE)
+    values (#{orgCode,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, 
+      #{levels,jdbcType=INTEGER}, #{aliveFlag,jdbcType=INTEGER}, #{saasCode,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{state,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.ffm.saas.smarterp.system.persistence.model.SysOrgPo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_sys_org
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orgCode != null">
+        ORG_CODE,
+      </if>
+      <if test="orgName != null">
+        ORG_NAME,
+      </if>
+      <if test="parentCode != null">
+        PARENT_CODE,
+      </if>
+      <if test="levels != null">
+        LEVELS,
+      </if>
+      <if test="aliveFlag != null">
+        ALIVE_FLAG,
+      </if>
+      <if test="saasCode != null">
+        SAAS_CODE,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null">
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null">
+        #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="levels != null">
+        #{levels,jdbcType=INTEGER},
+      </if>
+      <if test="aliveFlag != null">
+        #{aliveFlag,jdbcType=INTEGER},
+      </if>
+      <if test="saasCode != null">
+        #{saasCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.ffm.saas.smarterp.system.persistence.model.SysOrgPo">
+    update t_sys_org
+    <set>
+      <if test="orgCode != null">
+        ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null">
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null">
+        PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="levels != null">
+        LEVELS = #{levels,jdbcType=INTEGER},
+      </if>
+      <if test="aliveFlag != null">
+        ALIVE_FLAG = #{aliveFlag,jdbcType=INTEGER},
+      </if>
+      <if test="saasCode != null">
+        SAAS_CODE = #{saasCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.ffm.saas.smarterp.system.persistence.model.SysOrgPo">
+    update t_sys_org
+    set ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
+      LEVELS = #{levels,jdbcType=INTEGER},
+      ALIVE_FLAG = #{aliveFlag,jdbcType=INTEGER},
+      SAAS_CODE = #{saasCode,jdbcType=VARCHAR},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      STATE = #{state,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

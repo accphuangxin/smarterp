@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ffm.saas.smarterp.system.persistence.dao.SysMenuDao">
+  <resultMap id="BaseResultMap" type="org.ffm.saas.smarterp.system.persistence.model.SysMenuPo">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="PARENT_CODE" jdbcType="VARCHAR" property="parentCode" />
+    <result column="PAGE_CODE" jdbcType="VARCHAR" property="pageCode" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="SORT_INDEX" jdbcType="INTEGER" property="sortIndex" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="STATE" jdbcType="VARCHAR" property="state" />
+    <result column="SAAS_CODE" jdbcType="VARCHAR" property="saasCode" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CODE, PARENT_CODE, PAGE_CODE, REMARK, STATUS, SORT_INDEX, NAME, STATE, SAAS_CODE, 
+    CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME
+  </sql>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select ID, CODE, PARENT_CODE, PAGE_CODE, REMARK, STATUS, SORT_INDEX, NAME, STATE, 
+    SAAS_CODE, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME
+    from t_sys_menu
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_sys_menu
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_sys_menu
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.ffm.saas.smarterp.system.persistence.model.SysMenuPo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_sys_menu (CODE, PARENT_CODE, PAGE_CODE, 
+      REMARK, STATUS, SORT_INDEX, 
+      NAME, STATE, SAAS_CODE, 
+      CREATE_BY, CREATE_TIME, UPDATE_BY, 
+      UPDATE_TIME)
+    values (#{code,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, #{pageCode,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{sortIndex,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, #{saasCode,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="org.ffm.saas.smarterp.system.persistence.model.SysMenuPo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_sys_menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="parentCode != null">
+        PARENT_CODE,
+      </if>
+      <if test="pageCode != null">
+        PAGE_CODE,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="sortIndex != null">
+        SORT_INDEX,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+      <if test="saasCode != null">
+        SAAS_CODE,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null">
+        #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pageCode != null">
+        #{pageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="sortIndex != null">
+        #{sortIndex,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="saasCode != null">
+        #{saasCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.ffm.saas.smarterp.system.persistence.model.SysMenuPo">
+    update t_sys_menu
+    <set>
+      <if test="code != null">
+        CODE = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null">
+        PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pageCode != null">
+        PAGE_CODE = #{pageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="sortIndex != null">
+        SORT_INDEX = #{sortIndex,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="saasCode != null">
+        SAAS_CODE = #{saasCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.ffm.saas.smarterp.system.persistence.model.SysMenuPo">
+    update t_sys_menu
+    set CODE = #{code,jdbcType=VARCHAR},
+      PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
+      PAGE_CODE = #{pageCode,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      SORT_INDEX = #{sortIndex,jdbcType=INTEGER},
+      NAME = #{name,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=VARCHAR},
+      SAAS_CODE = #{saasCode,jdbcType=VARCHAR},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ffm.saas.smarterp.system.persistence.dao.SysAuthButtonDao">
+  <resultMap id="BaseResultMap" type="org.ffm.saas.smarterp.system.persistence.model.SysAuthButtonPo">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="BUTTON_ID" jdbcType="VARCHAR" property="buttonId" />
+    <result column="BUTTON_CODE" jdbcType="VARCHAR" property="buttonCode" />
+    <result column="ROLE_ID" jdbcType="VARCHAR" property="roleId" />
+    <result column="ROLE_CODE" jdbcType="VARCHAR" property="roleCode" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="BUTTON_NAME" jdbcType="VARCHAR" property="buttonName" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, BUTTON_ID, BUTTON_CODE, ROLE_ID, ROLE_CODE, REMARK, BUTTON_NAME, CREATE_BY, CREATE_TIME, 
+    UPDATE_BY, UPDATE_TIME
+  </sql>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select ID, BUTTON_ID, BUTTON_CODE, ROLE_ID, ROLE_CODE, REMARK, BUTTON_NAME, CREATE_BY, 
+    CREATE_TIME, UPDATE_BY, UPDATE_TIME
+    from t_sys_authbutton
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_sys_authbutton
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_sys_authbutton
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.ffm.saas.smarterp.system.persistence.model.SysAuthButtonPo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_sys_authbutton (BUTTON_ID, BUTTON_CODE, ROLE_ID, 
+      ROLE_CODE, REMARK, BUTTON_NAME, 
+      CREATE_BY, CREATE_TIME, UPDATE_BY, 
+      UPDATE_TIME)
+    values (#{buttonId,jdbcType=VARCHAR}, #{buttonCode,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, 
+      #{roleCode,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{buttonName,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="org.ffm.saas.smarterp.system.persistence.model.SysAuthButtonPo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_sys_authbutton
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="buttonId != null">
+        BUTTON_ID,
+      </if>
+      <if test="buttonCode != null">
+        BUTTON_CODE,
+      </if>
+      <if test="roleId != null">
+        ROLE_ID,
+      </if>
+      <if test="roleCode != null">
+        ROLE_CODE,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="buttonName != null">
+        BUTTON_NAME,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="buttonId != null">
+        #{buttonId,jdbcType=VARCHAR},
+      </if>
+      <if test="buttonCode != null">
+        #{buttonCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleCode != null">
+        #{roleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="buttonName != null">
+        #{buttonName,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.ffm.saas.smarterp.system.persistence.model.SysAuthButtonPo">
+    update t_sys_authbutton
+    <set>
+      <if test="buttonId != null">
+        BUTTON_ID = #{buttonId,jdbcType=VARCHAR},
+      </if>
+      <if test="buttonCode != null">
+        BUTTON_CODE = #{buttonCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        ROLE_ID = #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleCode != null">
+        ROLE_CODE = #{roleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="buttonName != null">
+        BUTTON_NAME = #{buttonName,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.ffm.saas.smarterp.system.persistence.model.SysAuthButtonPo">
+    update t_sys_authbutton
+    set BUTTON_ID = #{buttonId,jdbcType=VARCHAR},
+      BUTTON_CODE = #{buttonCode,jdbcType=VARCHAR},
+      ROLE_ID = #{roleId,jdbcType=VARCHAR},
+      ROLE_CODE = #{roleCode,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      BUTTON_NAME = #{buttonName,jdbcType=VARCHAR},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
