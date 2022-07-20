@@ -2,13 +2,12 @@ package org.ffm.saas.smarterp.system.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.util.List;
 import org.ffm.saas.smarterp.common.model.DataResult;
 import org.ffm.saas.smarterp.common.model.PageRequest;
 import org.ffm.saas.smarterp.common.model.PageResponse;
 import org.ffm.saas.smarterp.system.model.SysMenuDto;
-import org.ffm.saas.smarterp.system.persistence.model.SysMenuPo;
 import org.ffm.saas.smarterp.system.service.SysMenuService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,26 +24,26 @@ public class SysMenuController {
 
     @ApiOperation("sysMenu 分页查询")
     @RequestMapping(value = "/queryByPage", method = RequestMethod.POST)
-    public DataResult<PageResponse<SysMenuPo>> queryByPage(@RequestBody PageRequest<SysMenuPo> pageParam) {
-        PageRequest<SysMenuPo> pageParamPo = new PageRequest<SysMenuPo>();
-        BeanUtils.copyProperties(pageParam, pageParamPo);
-        return DataResult.ok(sysMenuService.queryByPage(pageParamPo));
+    public DataResult<PageResponse<SysMenuDto>> queryByPage(@RequestBody PageRequest<SysMenuDto> pageParam) {
+        return DataResult.ok(sysMenuService.queryByPage(pageParam));
+    }
+    
+    @ApiOperation("sysMenu 查询所有")
+    @RequestMapping(value = "/queryAll", method = RequestMethod.POST)
+    public DataResult<List<SysMenuDto>> queryAll() {
+        return DataResult.ok(sysMenuService.queryAll());
     }
 
     @ApiOperation("sysMenu 创建")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public DataResult<Boolean> create(@RequestBody SysMenuDto sysMenuDto) {
-        SysMenuPo sysMenuPo = new SysMenuPo();
-        BeanUtils.copyProperties(sysMenuDto, sysMenuPo);
-        return DataResult.ok(sysMenuService.create(sysMenuPo));
+        return DataResult.ok(sysMenuService.create(sysMenuDto));
     }
 
     @ApiOperation("sysMenu 基于主键修改")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public DataResult<Boolean> update(@RequestBody SysMenuDto sysMenuDto) {
-        SysMenuPo sysMenuPo = new SysMenuPo();
-        BeanUtils.copyProperties(sysMenuDto, sysMenuPo);
-        return DataResult.ok(sysMenuService.update(sysMenuPo));
+        return DataResult.ok(sysMenuService.update(sysMenuDto));
     }
 
     @ApiOperation("sysMenu 基于主键删除")

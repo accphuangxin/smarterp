@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.ffm.saas.smarterp.common.exception.AppException;
 import org.ffm.saas.smarterp.common.model.PageRequest;
 import org.ffm.saas.smarterp.common.model.PageResponse;
+import org.ffm.saas.smarterp.common.util.BeanUtilsWrapper;
+import org.ffm.saas.smarterp.system.model.SysUserDto;
 import org.ffm.saas.smarterp.system.persistence.dao.SysUserDao;
 import org.ffm.saas.smarterp.system.persistence.model.SysUserPo;
 import org.ffm.saas.smarterp.system.service.SysUserService;
@@ -20,27 +22,30 @@ public class SysUserServiceImpl implements SysUserService {
     private SysUserDao sysUserDao;
 
     @Override
-    public PageResponse<SysUserPo> queryByPage(PageRequest<SysUserPo> pageParam) {
+    public PageResponse<SysUserDto> queryByPage(PageRequest<SysUserDto> pageParam) {
         PageHelper.startPage(pageParam.getPageNum(),pageParam.getPageSize());
         List<SysUserPo> sysUserPoList = sysUserDao.selectAll();
-        PageInfo<SysUserPo> pageInfo = new PageInfo<>(sysUserPoList);
-        return PageResponse.<SysUserPo>builder(pageInfo);
+        List<SysUserDto> dtoList = sysUserPoList.stream().map(po ->{
+            return BeanUtilsWrapper.copy(po, new SysUserDto());
+        }).collect(Collectors.toList());
+        PageInfo<SysUserDto> pageInfo = new PageInfo<>(dtoList);
+        return PageResponse.<SysUserDto>builder(pageInfo);
     }
 
     @Override
-    public Boolean create(SysUserPo sysUserPo) {
-        if (sysUserPo == null){
+    public Boolean create(SysUserDto sysUserDto) {
+        if (sysUserDto == null){
             throw new AppException("sysUser 参数不能为空!");
         }
-        return sysUserDao.insert(sysUserPo) > 0 ? true : false;
+        return sysUserDao.insert(BeanUtilsWrapper.copy(sysUserDto, new SysUserPo())) > 0 ? true : false;
     }
 
     @Override
-    public Boolean update(SysUserPo sysUserPo) {
-        if (sysUserPo == null){
+    public Boolean update(SysUserDto sysUserDto) {
+        if (sysUserDto == null){
             throw new AppException("sysUser 参数不能为空!");
         }
-        return sysUserDao.updateByPrimaryKey(sysUserPo) > 0 ? true : false;
+        return sysUserDao.updateByPrimaryKey(BeanUtilsWrapper.copy(sysUserDto, new SysUserPo())) > 0 ? true : false;
     }
 
     @Override

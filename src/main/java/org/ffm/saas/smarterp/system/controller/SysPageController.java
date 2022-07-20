@@ -6,9 +6,7 @@ import org.ffm.saas.smarterp.common.model.DataResult;
 import org.ffm.saas.smarterp.common.model.PageRequest;
 import org.ffm.saas.smarterp.common.model.PageResponse;
 import org.ffm.saas.smarterp.system.model.SysPageDto;
-import org.ffm.saas.smarterp.system.persistence.model.SysPagePo;
 import org.ffm.saas.smarterp.system.service.SysPageService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api("sysPage Controller")
+@Api("sysPage 服务列表")
 @RestController
 @RequestMapping("/system/sysPage")
 public class SysPageController {
@@ -25,29 +23,23 @@ public class SysPageController {
 
     @ApiOperation("sysPage 分页查询")
     @RequestMapping(value = "/queryByPage", method = RequestMethod.POST)
-    public DataResult<PageResponse<SysPagePo>> queryByPage(@RequestBody PageRequest<SysPagePo> pageParam) {
-        PageRequest<SysPagePo> pageParamPo = new PageRequest<SysPagePo>();
-        BeanUtils.copyProperties(pageParam, pageParamPo);
-        return DataResult.ok(sysPageService.queryByPage(pageParamPo));
+    public DataResult<PageResponse<SysPageDto>> queryByPage(@RequestBody PageRequest<SysPageDto> pageParam) {
+        return DataResult.ok(sysPageService.queryByPage(pageParam));
     }
 
-    @ApiOperation("sysPage 创建")
+    @ApiOperation("sysPage 创建服务")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public DataResult<Boolean> create(@RequestBody SysPageDto sysPageDto) {
-        SysPagePo sysPagePo = new SysPagePo();
-        BeanUtils.copyProperties(sysPageDto, sysPagePo);
-        return DataResult.ok(sysPageService.create(sysPagePo));
+        return DataResult.ok(sysPageService.create(sysPageDto));
     }
 
-    @ApiOperation("sysPage 基于主键修改")
+    @ApiOperation("sysPage 修改服务")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public DataResult<Boolean> update(@RequestBody SysPageDto sysPageDto) {
-        SysPagePo sysPagePo = new SysPagePo();
-        BeanUtils.copyProperties(sysPageDto, sysPagePo);
-        return DataResult.ok(sysPageService.update(sysPagePo));
+        return DataResult.ok(sysPageService.update(sysPageDto));
     }
 
-    @ApiOperation("sysPage 基于主键删除")
+    @ApiOperation("sysPage 删除服务")
     @GetMapping("/delete")
     public DataResult<Boolean> delete(Integer id) {
         return DataResult.ok(sysPageService.delete(id));

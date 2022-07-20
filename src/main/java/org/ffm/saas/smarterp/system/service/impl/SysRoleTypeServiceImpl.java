@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.ffm.saas.smarterp.common.exception.AppException;
 import org.ffm.saas.smarterp.common.model.PageRequest;
 import org.ffm.saas.smarterp.common.model.PageResponse;
+import org.ffm.saas.smarterp.common.util.BeanUtilsWrapper;
+import org.ffm.saas.smarterp.system.model.SysRoleTypeDto;
 import org.ffm.saas.smarterp.system.persistence.dao.SysRoleTypeDao;
 import org.ffm.saas.smarterp.system.persistence.model.SysRoleTypePo;
 import org.ffm.saas.smarterp.system.service.SysRoleTypeService;
@@ -20,27 +22,30 @@ public class SysRoleTypeServiceImpl implements SysRoleTypeService {
     private SysRoleTypeDao sysRoleTypeDao;
 
     @Override
-    public PageResponse<SysRoleTypePo> queryByPage(PageRequest<SysRoleTypePo> pageParam) {
+    public PageResponse<SysRoleTypeDto> queryByPage(PageRequest<SysRoleTypeDto> pageParam) {
         PageHelper.startPage(pageParam.getPageNum(),pageParam.getPageSize());
         List<SysRoleTypePo> sysRoleTypePoList = sysRoleTypeDao.selectAll();
-        PageInfo<SysRoleTypePo> pageInfo = new PageInfo<>(sysRoleTypePoList);
-        return PageResponse.<SysRoleTypePo>builder(pageInfo);
+        List<SysRoleTypeDto> dtoList = sysRoleTypePoList.stream().map(po ->{
+            return BeanUtilsWrapper.copy(po, new SysRoleTypeDto());
+        }).collect(Collectors.toList());
+        PageInfo<SysRoleTypeDto> pageInfo = new PageInfo<>(dtoList);
+        return PageResponse.<SysRoleTypeDto>builder(pageInfo);
     }
 
     @Override
-    public Boolean create(SysRoleTypePo sysRoleTypePo) {
-        if (sysRoleTypePo == null){
+    public Boolean create(SysRoleTypeDto sysRoleTypeDto) {
+        if (sysRoleTypeDto == null){
             throw new AppException("sysRoleType 参数不能为空!");
         }
-        return sysRoleTypeDao.insert(sysRoleTypePo) > 0 ? true : false;
+        return sysRoleTypeDao.insert(BeanUtilsWrapper.copy(sysRoleTypeDto, new SysRoleTypePo())) > 0 ? true : false;
     }
 
     @Override
-    public Boolean update(SysRoleTypePo sysRoleTypePo) {
-        if (sysRoleTypePo == null){
+    public Boolean update(SysRoleTypeDto sysRoleTypeDto) {
+        if (sysRoleTypeDto == null){
             throw new AppException("sysRoleType 参数不能为空!");
         }
-        return sysRoleTypeDao.updateByPrimaryKey(sysRoleTypePo) > 0 ? true : false;
+        return sysRoleTypeDao.updateByPrimaryKey(BeanUtilsWrapper.copy(sysRoleTypeDto, new SysRoleTypePo())) > 0 ? true : false;
     }
 
     @Override

@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.ffm.saas.smarterp.common.exception.AppException;
 import org.ffm.saas.smarterp.common.model.PageRequest;
 import org.ffm.saas.smarterp.common.model.PageResponse;
+import org.ffm.saas.smarterp.common.util.BeanUtilsWrapper;
+import org.ffm.saas.smarterp.system.model.SysOrgDto;
 import org.ffm.saas.smarterp.system.persistence.dao.SysOrgDao;
 import org.ffm.saas.smarterp.system.persistence.model.SysOrgPo;
 import org.ffm.saas.smarterp.system.service.SysOrgService;
@@ -20,27 +22,30 @@ public class SysOrgServiceImpl implements SysOrgService {
     private SysOrgDao sysOrgDao;
 
     @Override
-    public PageResponse<SysOrgPo> queryByPage(PageRequest<SysOrgPo> pageParam) {
+    public PageResponse<SysOrgDto> queryByPage(PageRequest<SysOrgDto> pageParam) {
         PageHelper.startPage(pageParam.getPageNum(),pageParam.getPageSize());
         List<SysOrgPo> sysOrgPoList = sysOrgDao.selectAll();
-        PageInfo<SysOrgPo> pageInfo = new PageInfo<>(sysOrgPoList);
-        return PageResponse.<SysOrgPo>builder(pageInfo);
+        List<SysOrgDto> dtoList = sysOrgPoList.stream().map(po ->{
+            return BeanUtilsWrapper.copy(po, new SysOrgDto());
+        }).collect(Collectors.toList());
+        PageInfo<SysOrgDto> pageInfo = new PageInfo<>(dtoList);
+        return PageResponse.<SysOrgDto>builder(pageInfo);
     }
 
     @Override
-    public Boolean create(SysOrgPo sysOrgPo) {
-        if (sysOrgPo == null){
+    public Boolean create(SysOrgDto sysOrgDto) {
+        if (sysOrgDto == null){
             throw new AppException("sysOrg 参数不能为空!");
         }
-        return sysOrgDao.insert(sysOrgPo) > 0 ? true : false;
+        return sysOrgDao.insert(BeanUtilsWrapper.copy(sysOrgDto, new SysOrgPo())) > 0 ? true : false;
     }
 
     @Override
-    public Boolean update(SysOrgPo sysOrgPo) {
-        if (sysOrgPo == null){
+    public Boolean update(SysOrgDto sysOrgDto) {
+        if (sysOrgDto == null){
             throw new AppException("sysOrg 参数不能为空!");
         }
-        return sysOrgDao.updateByPrimaryKey(sysOrgPo) > 0 ? true : false;
+        return sysOrgDao.updateByPrimaryKey(BeanUtilsWrapper.copy(sysOrgDto, new SysOrgPo())) > 0 ? true : false;
     }
 
     @Override

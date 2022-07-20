@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.ffm.saas.smarterp.common.exception.AppException;
 import org.ffm.saas.smarterp.common.model.PageRequest;
 import org.ffm.saas.smarterp.common.model.PageResponse;
+import org.ffm.saas.smarterp.common.util.BeanUtilsWrapper;
+import org.ffm.saas.smarterp.system.model.SysAuthSourceDto;
 import org.ffm.saas.smarterp.system.persistence.dao.SysAuthSourceDao;
 import org.ffm.saas.smarterp.system.persistence.model.SysAuthSourcePo;
 import org.ffm.saas.smarterp.system.service.SysAuthSourceService;
@@ -20,27 +22,30 @@ public class SysAuthSourceServiceImpl implements SysAuthSourceService {
     private SysAuthSourceDao sysAuthSourceDao;
 
     @Override
-    public PageResponse<SysAuthSourcePo> queryByPage(PageRequest<SysAuthSourcePo> pageParam) {
+    public PageResponse<SysAuthSourceDto> queryByPage(PageRequest<SysAuthSourceDto> pageParam) {
         PageHelper.startPage(pageParam.getPageNum(),pageParam.getPageSize());
         List<SysAuthSourcePo> sysAuthSourcePoList = sysAuthSourceDao.selectAll();
-        PageInfo<SysAuthSourcePo> pageInfo = new PageInfo<>(sysAuthSourcePoList);
-        return PageResponse.<SysAuthSourcePo>builder(pageInfo);
+        List<SysAuthSourceDto> dtoList = sysAuthSourcePoList.stream().map(po ->{
+            return BeanUtilsWrapper.copy(po, new SysAuthSourceDto());
+        }).collect(Collectors.toList());
+        PageInfo<SysAuthSourceDto> pageInfo = new PageInfo<>(dtoList);
+        return PageResponse.<SysAuthSourceDto>builder(pageInfo);
     }
 
     @Override
-    public Boolean create(SysAuthSourcePo sysAuthSourcePo) {
-        if (sysAuthSourcePo == null){
+    public Boolean create(SysAuthSourceDto sysAuthSourceDto) {
+        if (sysAuthSourceDto == null){
             throw new AppException("sysAuthSource 参数不能为空!");
         }
-        return sysAuthSourceDao.insert(sysAuthSourcePo) > 0 ? true : false;
+        return sysAuthSourceDao.insert(BeanUtilsWrapper.copy(sysAuthSourceDto, new SysAuthSourcePo())) > 0 ? true : false;
     }
 
     @Override
-    public Boolean update(SysAuthSourcePo sysAuthSourcePo) {
-        if (sysAuthSourcePo == null){
+    public Boolean update(SysAuthSourceDto sysAuthSourceDto) {
+        if (sysAuthSourceDto == null){
             throw new AppException("sysAuthSource 参数不能为空!");
         }
-        return sysAuthSourceDao.updateByPrimaryKey(sysAuthSourcePo) > 0 ? true : false;
+        return sysAuthSourceDao.updateByPrimaryKey(BeanUtilsWrapper.copy(sysAuthSourceDto, new SysAuthSourcePo())) > 0 ? true : false;
     }
 
     @Override

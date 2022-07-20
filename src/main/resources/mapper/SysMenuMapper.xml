@@ -24,7 +24,7 @@
   <select id="selectAll" resultMap="BaseResultMap">
     select ID, CODE, PARENT_CODE, PAGE_CODE, REMARK, STATUS, SORT_INDEX, NAME, STATE, 
     SAAS_CODE, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME
-    from t_sys_menu
+    from t_sys_menu where status = 1 order by SORT_INDEX,PARENT_CODE
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 

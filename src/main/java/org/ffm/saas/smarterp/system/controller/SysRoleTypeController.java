@@ -6,9 +6,7 @@ import org.ffm.saas.smarterp.common.model.DataResult;
 import org.ffm.saas.smarterp.common.model.PageRequest;
 import org.ffm.saas.smarterp.common.model.PageResponse;
 import org.ffm.saas.smarterp.system.model.SysRoleTypeDto;
-import org.ffm.saas.smarterp.system.persistence.model.SysRoleTypePo;
 import org.ffm.saas.smarterp.system.service.SysRoleTypeService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api("sysRoleType Controller")
+@Api("sysRoleType 服务列表")
 @RestController
 @RequestMapping("/system/sysRoleType")
 public class SysRoleTypeController {
@@ -25,29 +23,23 @@ public class SysRoleTypeController {
 
     @ApiOperation("sysRoleType 分页查询")
     @RequestMapping(value = "/queryByPage", method = RequestMethod.POST)
-    public DataResult<PageResponse<SysRoleTypePo>> queryByPage(@RequestBody PageRequest<SysRoleTypePo> pageParam) {
-        PageRequest<SysRoleTypePo> pageParamPo = new PageRequest<SysRoleTypePo>();
-        BeanUtils.copyProperties(pageParam, pageParamPo);
-        return DataResult.ok(sysRoleTypeService.queryByPage(pageParamPo));
+    public DataResult<PageResponse<SysRoleTypeDto>> queryByPage(@RequestBody PageRequest<SysRoleTypeDto> pageParam) {
+        return DataResult.ok(sysRoleTypeService.queryByPage(pageParam));
     }
 
-    @ApiOperation("sysRoleType 创建")
+    @ApiOperation("sysRoleType 创建服务")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public DataResult<Boolean> create(@RequestBody SysRoleTypeDto sysRoleTypeDto) {
-        SysRoleTypePo sysRoleTypePo = new SysRoleTypePo();
-        BeanUtils.copyProperties(sysRoleTypeDto, sysRoleTypePo);
-        return DataResult.ok(sysRoleTypeService.create(sysRoleTypePo));
+        return DataResult.ok(sysRoleTypeService.create(sysRoleTypeDto));
     }
 
-    @ApiOperation("sysRoleType 基于主键修改")
+    @ApiOperation("sysRoleType 修改服务")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public DataResult<Boolean> update(@RequestBody SysRoleTypeDto sysRoleTypeDto) {
-        SysRoleTypePo sysRoleTypePo = new SysRoleTypePo();
-        BeanUtils.copyProperties(sysRoleTypeDto, sysRoleTypePo);
-        return DataResult.ok(sysRoleTypeService.update(sysRoleTypePo));
+        return DataResult.ok(sysRoleTypeService.update(sysRoleTypeDto));
     }
 
-    @ApiOperation("sysRoleType 基于主键删除")
+    @ApiOperation("sysRoleType 删除服务")
     @GetMapping("/delete")
     public DataResult<Boolean> delete(Integer id) {
         return DataResult.ok(sysRoleTypeService.delete(id));

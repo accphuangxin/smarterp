@@ -2,14 +2,14 @@ package org.ffm.saas.smarterp.system.service;
 
 import org.ffm.saas.smarterp.common.model.PageRequest;
 import org.ffm.saas.smarterp.common.model.PageResponse;
-import org.ffm.saas.smarterp.system.persistence.model.SysOrgPo;
+import org.ffm.saas.smarterp.system.model.SysOrgDto;
 
 public interface SysOrgService {
-    PageResponse<SysOrgPo> queryByPage(PageRequest<SysOrgPo> pageParam);
+    PageResponse<SysOrgDto> queryByPage(PageRequest<SysOrgDto> pageParam);
 
-    Boolean create(SysOrgPo sysOrgPo);
+    Boolean create(SysOrgDto sysOrgDto);
 
-    Boolean update(SysOrgPo sysOrgPo);
+    Boolean update(SysOrgDto sysOrgDto);
 
     Boolean delete(Integer id);
 }

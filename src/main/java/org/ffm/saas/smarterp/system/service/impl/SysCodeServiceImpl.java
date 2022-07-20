@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.ffm.saas.smarterp.common.exception.AppException;
 import org.ffm.saas.smarterp.common.model.PageRequest;
 import org.ffm.saas.smarterp.common.model.PageResponse;
+import org.ffm.saas.smarterp.common.util.BeanUtilsWrapper;
+import org.ffm.saas.smarterp.system.model.SysCodeDto;
 import org.ffm.saas.smarterp.system.persistence.dao.SysCodeDao;
 import org.ffm.saas.smarterp.system.persistence.model.SysCodePo;
 import org.ffm.saas.smarterp.system.service.SysCodeService;
@@ -20,27 +22,30 @@ public class SysCodeServiceImpl implements SysCodeService {
     private SysCodeDao sysCodeDao;
 
     @Override
-    public PageResponse<SysCodePo> queryByPage(PageRequest<SysCodePo> pageParam) {
+    public PageResponse<SysCodeDto> queryByPage(PageRequest<SysCodeDto> pageParam) {
         PageHelper.startPage(pageParam.getPageNum(),pageParam.getPageSize());
         List<SysCodePo> sysCodePoList = sysCodeDao.selectAll();
-        PageInfo<SysCodePo> pageInfo = new PageInfo<>(sysCodePoList);
-        return PageResponse.<SysCodePo>builder(pageInfo);
+        List<SysCodeDto> dtoList = sysCodePoList.stream().map(po ->{
+            return BeanUtilsWrapper.copy(po, new SysCodeDto());
+        }).collect(Collectors.toList());
+        PageInfo<SysCodeDto> pageInfo = new PageInfo<>(dtoList);
+        return PageResponse.<SysCodeDto>builder(pageInfo);
     }
 
     @Override
-    public Boolean create(SysCodePo sysCodePo) {
-        if (sysCodePo == null){
+    public Boolean create(SysCodeDto sysCodeDto) {
+        if (sysCodeDto == null){
             throw new AppException("sysCode 参数不能为空!");
         }
-        return sysCodeDao.insert(sysCodePo) > 0 ? true : false;
+        return sysCodeDao.insert(BeanUtilsWrapper.copy(sysCodeDto, new SysCodePo())) > 0 ? true : false;
     }
 
     @Override
-    public Boolean update(SysCodePo sysCodePo) {
-        if (sysCodePo == null){
+    public Boolean update(SysCodeDto sysCodeDto) {
+        if (sysCodeDto == null){
             throw new AppException("sysCode 参数不能为空!");
         }
-        return sysCodeDao.updateByPrimaryKey(sysCodePo) > 0 ? true : false;
+        return sysCodeDao.updateByPrimaryKey(BeanUtilsWrapper.copy(sysCodeDto, new SysCodePo())) > 0 ? true : false;
     }
 
     @Override

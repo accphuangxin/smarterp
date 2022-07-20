@@ -2,14 +2,14 @@ package org.ffm.saas.smarterp.system.service;
 
 import org.ffm.saas.smarterp.common.model.PageRequest;
 import org.ffm.saas.smarterp.common.model.PageResponse;
-import org.ffm.saas.smarterp.system.persistence.model.SysAuthUserPo;
+import org.ffm.saas.smarterp.system.model.SysAuthUserDto;
 
 public interface SysAuthUserService {
-    PageResponse<SysAuthUserPo> queryByPage(PageRequest<SysAuthUserPo> pageParam);
+    PageResponse<SysAuthUserDto> queryByPage(PageRequest<SysAuthUserDto> pageParam);
 
-    Boolean create(SysAuthUserPo sysAuthUserPo);
+    Boolean create(SysAuthUserDto sysAuthUserDto);
 
-    Boolean update(SysAuthUserPo sysAuthUserPo);
+    Boolean update(SysAuthUserDto sysAuthUserDto);
 
     Boolean delete(Integer id);
 }

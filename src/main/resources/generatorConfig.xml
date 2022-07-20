@@ -100,11 +100,7 @@
       <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
     </table>
 
-    <table tableName="t_sys_menu" schema="erp" domainObjectName="SysMenu" enableCountByExample="false"
-      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-      selectByExampleQueryId="false">
-      <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
-    </table>
+
 
     <table tableName="t_sys_page" schema="erp" domainObjectName="SysPage" enableCountByExample="false"
       enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
@@ -151,6 +147,13 @@
       selectByExampleQueryId="false">
       <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
     </table>
+
+
+<!--    <table tableName="t_sys_menu" schema="erp" domainObjectName="SysMenu" enableCountByExample="false"-->
+<!--      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--      selectByExampleQueryId="false">-->
+<!--      <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+<!--    </table>-->
 
     <!-- geelynote mybatis插件的搭建 -->
   </context>

@@ -3,10 +3,13 @@ package org.ffm.saas.smarterp.system.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.ffm.saas.smarterp.common.exception.AppException;
 import org.ffm.saas.smarterp.common.model.PageRequest;
 import org.ffm.saas.smarterp.common.model.PageResponse;
+import org.ffm.saas.smarterp.common.util.BeanUtilsWrapper;
+import org.ffm.saas.smarterp.system.model.SysAuthButtonDto;
 import org.ffm.saas.smarterp.system.persistence.dao.SysAuthButtonDao;
 import org.ffm.saas.smarterp.system.persistence.model.SysAuthButtonPo;
 import org.ffm.saas.smarterp.system.service.SysAuthButtonService;
@@ -20,27 +23,30 @@ public class SysAuthButtonServiceImpl implements SysAuthButtonService {
     private SysAuthButtonDao sysAuthButtonDao;
 
     @Override
-    public PageResponse<SysAuthButtonPo> queryByPage(PageRequest<SysAuthButtonPo> pageParam) {
+    public PageResponse<SysAuthButtonDto> queryByPage(PageRequest<SysAuthButtonDto> pageParam) {
         PageHelper.startPage(pageParam.getPageNum(),pageParam.getPageSize());
         List<SysAuthButtonPo> sysAuthButtonPoList = sysAuthButtonDao.selectAll();
-        PageInfo<SysAuthButtonPo> pageInfo = new PageInfo<>(sysAuthButtonPoList);
-        return PageResponse.<SysAuthButtonPo>builder(pageInfo);
+        List<SysAuthButtonDto> dtoList = sysAuthButtonPoList.stream().map(po ->{
+            return BeanUtilsWrapper.copy(po, new SysAuthButtonDto());
+        }).collect(Collectors.toList());
+        PageInfo<SysAuthButtonDto> pageInfo = new PageInfo<>(dtoList);
+        return PageResponse.<SysAuthButtonDto>builder(pageInfo);
     }
 
     @Override
-    public Boolean create(SysAuthButtonPo sysAuthButtonPo) {
-        if (sysAuthButtonPo == null){
+    public Boolean create(SysAuthButtonDto sysAuthButtonDto) {
+        if (sysAuthButtonDto == null){
             throw new AppException("sysAuthButton 参数不能为空!");
         }
-        return sysAuthButtonDao.insert(sysAuthButtonPo) > 0 ? true : false;
+        return sysAuthButtonDao.insert(BeanUtilsWrapper.copy(sysAuthButtonDto, new SysAuthButtonPo())) > 0 ? true : false;
     }
 
     @Override
-    public Boolean update(SysAuthButtonPo sysAuthButtonPo) {
-        if (sysAuthButtonPo == null){
+    public Boolean update(SysAuthButtonDto sysAuthButtonDto) {
+        if (sysAuthButtonDto == null){
             throw new AppException("sysAuthButton 参数不能为空!");
         }
-        return sysAuthButtonDao.updateByPrimaryKey(sysAuthButtonPo) > 0 ? true : false;
+        return sysAuthButtonDao.updateByPrimaryKey(BeanUtilsWrapper.copy(sysAuthButtonDto, new SysAuthButtonPo())) > 0 ? true : false;
     }
 
     @Override

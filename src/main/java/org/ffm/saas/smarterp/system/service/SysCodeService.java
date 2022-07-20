@@ -2,14 +2,14 @@ package org.ffm.saas.smarterp.system.service;
 
 import org.ffm.saas.smarterp.common.model.PageRequest;
 import org.ffm.saas.smarterp.common.model.PageResponse;
-import org.ffm.saas.smarterp.system.persistence.model.SysCodePo;
+import org.ffm.saas.smarterp.system.model.SysCodeDto;
 
 public interface SysCodeService {
-    PageResponse<SysCodePo> queryByPage(PageRequest<SysCodePo> pageParam);
+    PageResponse<SysCodeDto> queryByPage(PageRequest<SysCodeDto> pageParam);
 
-    Boolean create(SysCodePo sysCodePo);
+    Boolean create(SysCodeDto sysCodeDto);
 
-    Boolean update(SysCodePo sysCodePo);
+    Boolean update(SysCodeDto sysCodeDto);
 
     Boolean delete(Integer id);
 }

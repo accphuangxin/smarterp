@@ -2,14 +2,14 @@ package org.ffm.saas.smarterp.system.service;
 
 import org.ffm.saas.smarterp.common.model.PageRequest;
 import org.ffm.saas.smarterp.common.model.PageResponse;
-import org.ffm.saas.smarterp.system.persistence.model.SysRolePo;
+import org.ffm.saas.smarterp.system.model.SysRoleDto;
 
 public interface SysRoleService {
-    PageResponse<SysRolePo> queryByPage(PageRequest<SysRolePo> pageParam);
+    PageResponse<SysRoleDto> queryByPage(PageRequest<SysRoleDto> pageParam);
 
-    Boolean create(SysRolePo sysRolePo);
+    Boolean create(SysRoleDto sysRoleDto);
 
-    Boolean update(SysRolePo sysRolePo);
+    Boolean update(SysRoleDto sysRoleDto);
 
     Boolean delete(Integer id);
 }

@@ -2,14 +2,14 @@ package org.ffm.saas.smarterp.system.service;
 
 import org.ffm.saas.smarterp.common.model.PageRequest;
 import org.ffm.saas.smarterp.common.model.PageResponse;
-import org.ffm.saas.smarterp.system.persistence.model.SysAuthButtonPo;
+import org.ffm.saas.smarterp.system.model.SysAuthButtonDto;
 
 public interface SysAuthButtonService {
-    PageResponse<SysAuthButtonPo> queryByPage(PageRequest<SysAuthButtonPo> pageParam);
+    PageResponse<SysAuthButtonDto> queryByPage(PageRequest<SysAuthButtonDto> pageParam);
 
-    Boolean create(SysAuthButtonPo sysAuthButtonPo);
+    Boolean create(SysAuthButtonDto sysAuthButtonDto);
 
-    Boolean update(SysAuthButtonPo sysAuthButtonPo);
+    Boolean update(SysAuthButtonDto sysAuthButtonDto);
 
     Boolean delete(Integer id);
 }

@@ -6,9 +6,7 @@ import org.ffm.saas.smarterp.common.model.DataResult;
 import org.ffm.saas.smarterp.common.model.PageRequest;
 import org.ffm.saas.smarterp.common.model.PageResponse;
 import org.ffm.saas.smarterp.system.model.SysAuthServiceDto;
-import org.ffm.saas.smarterp.system.persistence.model.SysAuthServicePo;
 import org.ffm.saas.smarterp.system.service.SysAuthServiceService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api("sysAuthService Controller")
+@Api("sysAuthService 服务列表")
 @RestController
 @RequestMapping("/system/sysAuthService")
 public class SysAuthServiceController {
@@ -25,29 +23,23 @@ public class SysAuthServiceController {
 
     @ApiOperation("sysAuthService 分页查询")
     @RequestMapping(value = "/queryByPage", method = RequestMethod.POST)
-    public DataResult<PageResponse<SysAuthServicePo>> queryByPage(@RequestBody PageRequest<SysAuthServicePo> pageParam) {
-        PageRequest<SysAuthServicePo> pageParamPo = new PageRequest<SysAuthServicePo>();
-        BeanUtils.copyProperties(pageParam, pageParamPo);
-        return DataResult.ok(sysAuthServiceService.queryByPage(pageParamPo));
+    public DataResult<PageResponse<SysAuthServiceDto>> queryByPage(@RequestBody PageRequest<SysAuthServiceDto> pageParam) {
+        return DataResult.ok(sysAuthServiceService.queryByPage(pageParam));
     }
 
-    @ApiOperation("sysAuthService 创建")
+    @ApiOperation("sysAuthService 创建服务")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public DataResult<Boolean> create(@RequestBody SysAuthServiceDto sysAuthServiceDto) {
-        SysAuthServicePo sysAuthServicePo = new SysAuthServicePo();
-        BeanUtils.copyProperties(sysAuthServiceDto, sysAuthServicePo);
-        return DataResult.ok(sysAuthServiceService.create(sysAuthServicePo));
+        return DataResult.ok(sysAuthServiceService.create(sysAuthServiceDto));
     }
 
-    @ApiOperation("sysAuthService 基于主键修改")
+    @ApiOperation("sysAuthService 修改服务")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public DataResult<Boolean> update(@RequestBody SysAuthServiceDto sysAuthServiceDto) {
-        SysAuthServicePo sysAuthServicePo = new SysAuthServicePo();
-        BeanUtils.copyProperties(sysAuthServiceDto, sysAuthServicePo);
-        return DataResult.ok(sysAuthServiceService.update(sysAuthServicePo));
+        return DataResult.ok(sysAuthServiceService.update(sysAuthServiceDto));
     }
 
-    @ApiOperation("sysAuthService 基于主键删除")
+    @ApiOperation("sysAuthService 删除服务")
     @GetMapping("/delete")
     public DataResult<Boolean> delete(Integer id) {
         return DataResult.ok(sysAuthServiceService.delete(id));
